@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "current_role",
+      "text": "What's your current role or field?",
+      "type": "single",
+      "options": [
+        { "value": "software_engineering", "label": "Software Engineering" },
+        { "value": "data_science", "label": "Data Science / ML" },
+        { "value": "product_management", "label": "Product Management" },
+        { "value": "design", "label": "UX / Product Design" },
+        { "value": "marketing", "label": "Marketing / Growth" },
+        { "value": "sales", "label": "Sales / Business Dev" },
+        { "value": "finance", "label": "Finance / Accounting" },
+        { "value": "operations", "label": "Operations / HR" },
+        { "value": "other", "label": "Other" }
+      ],
+      "next": "years_experience"
+    },
+    {
+      "id": "years_experience",
+      "text": "How many years of professional experience do you have?",
+      "type": "slider",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "years",
+      "labels": { "0": "< 1 year", "5": "5 years", "10": "10 years", "20": "20+" },
+      "next": "employment_status"
+    },
+    {
+      "id": "employment_status",
+      "text": "Are you currently employed?",
+      "type": "single",
+      "options": [
+        { "value": "employed", "label": "Yes, and not actively looking" },
+        { "value": "employed_looking", "label": "Yes, but open to opportunities" },
+        { "value": "unemployed", "label": "No, actively job searching" }
+      ],
+      "next": {
+        "type": "conditional",
+        "branches": [
+          { "when": { "field": "employment_status", "equals": "unemployed" }, "goto": "applications_per_week" },
+          { "default": true, "goto": "applications_per_week" }
+        ]
+      }
+    },
+    {
+      "id": "applications_per_week",
+      "text": "How many job applications are you sending per week?",
+      "type": "slider",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "applications/week",
+      "labels": { "0": "0", "5": "5", "10": "10", "20": "20", "30": "30+" },
+      "next": "location_preference"
+    },
+    {
+      "id": "location_preference",
+      "text": "What's your preferred work location?",
+      "type": "single",
+      "options": [
+        { "value": "remote", "label": "Remote only" },
+        { "value": "hybrid", "label": "Hybrid" },
+        { "value": "onsite", "label": "On-site" },
+        { "value": "flexible", "label": "Flexible / No preference" }
+      ],
+      "next": "target_role"
+    },
+    {
+      "id": "target_role",
+      "text": "What's your target role or position?",
+      "type": "single",
+      "options": [
+        { "value": "software_engineering", "label": "Software Engineer / Developer" },
+        { "value": "data_science", "label": "Data Scientist / ML Engineer" },
+        { "value": "product_management", "label": "Product Manager" },
+        { "value": "design", "label": "UX Designer" },
+        { "value": "engineering_manager", "label": "Engineering Manager" },
+        { "value": "marketing", "label": "Marketing Manager / Growth" },
+        { "value": "sales", "label": "Sales / Account Executive" },
+        { "value": "finance", "label": "Finance / Analyst" },
+        { "value": "other", "label": "Other" }
+      ],
+      "next": "linkedin_rating"
+    },
+    {
+      "id": "linkedin_rating",
+      "text": "How would you rate your LinkedIn profile completeness?",
+      "type": "slider",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "",
+      "labels": {
+        "1": "Basic",
+        "2": "Incomplete",
+        "3": "OK",
+        "4": "Good",
+        "5": "All-Star"
+      },
+      "next": null
+    }
+  ]
+}
