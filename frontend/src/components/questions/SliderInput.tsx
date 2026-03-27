@@ -30,7 +30,7 @@ export function SliderInput({ min, max, step, unit, labels, value, onChange }: P
           onChange={e => onChange(Number(e.target.value))}
           className="w-full h-2 rounded-full appearance-none cursor-pointer"
           style={{
-            background: `linear-gradient(to right, #22c55e ${pct}%, #374151 ${pct}%)`,
+            background: `linear-gradient(to left, #22c55e ${pct}%, #374151 ${pct}%)`,
           }}
           aria-label={`Slider: ${displayValue}`}
           aria-valuemin={min}
@@ -40,7 +40,7 @@ export function SliderInput({ min, max, step, unit, labels, value, onChange }: P
       </div>
 
       {labels && (
-        <div className="flex justify-between mt-2 text-xs text-gray-500 px-1">
+        <div className="flex justify-between mt-2 text-xs text-gray-500 px-1" dir="rtl">
           {Object.entries(labels).map(([k, v]) => (
             <span key={k}>{v}</span>
           ))}
