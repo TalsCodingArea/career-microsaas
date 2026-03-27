@@ -11,7 +11,7 @@
  * Timeline is derived from the composite score.
  */
 
-import type { Answer, EvaluationResult, INetworkingContact, MarketSnapshot } from '../types/index.js'
+import type { Answer, EvaluationResult, INetworkingContact, MarketSnapshot, PinnedRepo } from '../types/index.js'
 import { JobMarketData } from '../models/JobMarketData.js'
 import { NetworkingContact } from '../models/NetworkingContact.js'
 
@@ -37,6 +37,12 @@ const MOCK_CONTACTS: INetworkingContact[] = [
   { name: 'נועה אברהם', role: 'מנהלת מוצר', company: 'Fiverr', linkedinUrl: 'https://linkedin.com', careerPathTags: ['product_management'], relevanceScore: 0.88 },
   { name: 'רן גולן', role: 'מומחה סייבר', company: 'CyberArk', linkedinUrl: 'https://linkedin.com', careerPathTags: ['cyber'], relevanceScore: 0.91 },
   { name: 'מיכל שפירא', role: 'מעצבת UX', company: 'Elementor', linkedinUrl: 'https://linkedin.com', careerPathTags: ['design'], relevanceScore: 0.85 },
+  // Top LangChain voices — recommended follows for AI/ML engineers
+  { name: 'Harrison Chase', role: 'Co-founder & CEO', company: 'LangChain', linkedinUrl: 'https://www.linkedin.com/in/harrison-chase-961287118', careerPathTags: ['data_science', 'software_engineering', 'langchain'], relevanceScore: 0.99 },
+  { name: 'Ankush Gola', role: 'Co-founder', company: 'LangChain', linkedinUrl: 'https://www.linkedin.com/in/ankush-gola', careerPathTags: ['data_science', 'software_engineering', 'langchain'], relevanceScore: 0.98 },
+  { name: 'Greg Kamradt', role: 'AI Developer & Educator', company: 'Independent', linkedinUrl: 'https://www.linkedin.com/in/gregkamradt', careerPathTags: ['data_science', 'langchain'], relevanceScore: 0.93 },
+  { name: 'Sam Witteveen', role: 'AI Engineer & Content Creator', company: 'Red Dragon AI', linkedinUrl: 'https://www.linkedin.com/in/samwitteveen', careerPathTags: ['data_science', 'software_engineering', 'langchain'], relevanceScore: 0.91 },
+  { name: 'Roie Schwaber-Cohen', role: 'Developer Advocate', company: 'Pinecone', linkedinUrl: 'https://www.linkedin.com/in/roie-schwaber-cohen', careerPathTags: ['data_science', 'langchain'], relevanceScore: 0.89 },
 ]
 
 function getAnswerValue(answers: Answer[], questionId: string): string | number | undefined {
@@ -147,6 +153,7 @@ export async function runEvaluation(answers: Answer[]): Promise<EvaluationResult
     marketSnapshot,
     tips,
     networkingContacts: contacts as INetworkingContact[],
+    pinnedRepos: [],
     score,
   }
 }
