@@ -1,4 +1,4 @@
-import type { EvaluationResult } from '../types/QuestionnaireTypes.ts'
+import type { EvaluationResult, PinnedRepo } from '../types/QuestionnaireTypes.ts'
 import { useQuestionnaire } from '../context/QuestionnaireContext.tsx'
 
 interface Props {
@@ -49,9 +49,43 @@ function ScoreRing({ score }: { score: number }) {
   )
 }
 
+const LANGUAGE_COLORS: Record<string, string> = {
+  TypeScript: 'text-blue-400',
+  JavaScript: 'text-yellow-400',
+  Python: 'text-green-400',
+  Go: 'text-cyan-400',
+  Ruby: 'text-red-400',
+  Java: 'text-orange-400',
+  CSS: 'text-purple-400',
+  Markdown: 'text-gray-400',
+}
+
+function RepoCard({ repo }: { repo: PinnedRepo }) {
+  const langColor = LANGUAGE_COLORS[repo.language] ?? 'text-gray-400'
+  const starsDisplay = repo.stars >= 1000 ? `${(repo.stars / 1000).toFixed(0)}k` : String(repo.stars)
+
+  return (
+    <a
+      href={repo.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col gap-2 p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors group"
+    >
+      <div className="flex items-start justify-between gap-2">
+        <span className="font-medium text-gray-100 group-hover:text-accent-400 transition-colors text-sm truncate">
+          {repo.name}
+        </span>
+        <span className="text-gray-500 text-xs flex-shrink-0">★ {starsDisplay}</span>
+      </div>
+      <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{repo.description}</p>
+      <span className={`text-xs font-medium ${langColor}`}>{repo.language}</span>
+    </a>
+  )
+}
+
 export function Results({ result }: Props) {
   const { reset } = useQuestionnaire()
-  const { marketSnapshot, tips, networkingContacts } = result
+  const { marketSnapshot, tips, networkingContacts, pinnedRepos } = result
 
   const salaryDisplay = `₪${marketSnapshot.avgSalaryMin.toLocaleString('he-IL')} – ₪${marketSnapshot.avgSalaryMax.toLocaleString('he-IL')} / חודש`
 
@@ -144,6 +178,19 @@ export function Results({ result }: Props) {
                   לינקדאין →
                 </span>
               </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Pinned Repos */}
+      {pinnedRepos && pinnedRepos.length > 0 && (
+        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-gray-100 mb-1">6 ריפוסיטוריז מומלצים לרקרוטרים</h2>
+          <p className="text-xs text-gray-500 mb-4">פרויקטים אלו יחזקו את הפרופיל שלך — כדאי לתרום, להוסיף כוכב, או לציין היכרות עמם</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {pinnedRepos.map((repo, i) => (
+              <RepoCard key={i} repo={repo} />
             ))}
           </div>
         </div>

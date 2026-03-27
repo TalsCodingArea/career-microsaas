@@ -45,6 +45,53 @@ const MOCK_CONTACTS: INetworkingContact[] = [
   { name: 'Roie Schwaber-Cohen', role: 'Developer Advocate', company: 'Pinecone', linkedinUrl: 'https://www.linkedin.com/in/roie-schwaber-cohen', careerPathTags: ['data_science', 'langchain'], relevanceScore: 0.89 },
 ]
 
+const PINNED_REPOS: PinnedRepo[] = [
+  // Software Engineering
+  { name: 'freeCodeCamp', description: 'פלטפורמת לימוד קוד עם אלפי תרגילים ופרויקטים', url: 'https://github.com/freeCodeCamp/freeCodeCamp', language: 'TypeScript', stars: 400000, careerPathTags: ['software_engineering'] },
+  { name: 'public-apis', description: 'רשימה מקיפה של APIs ציבוריים לפרויקטי צד', url: 'https://github.com/public-apis/public-apis', language: 'Python', stars: 320000, careerPathTags: ['software_engineering', 'devops'] },
+  { name: 'system-design-primer', description: 'מדריך לעיצוב מערכות — חובה לכל ראיון בכיר', url: 'https://github.com/donnemartin/system-design-primer', language: 'Python', stars: 280000, careerPathTags: ['software_engineering', 'engineering_manager'] },
+  { name: 'react', description: 'ספריית ה-UI הפופולרית ביותר — תרומה מוסיפה לפרופיל', url: 'https://github.com/facebook/react', language: 'JavaScript', stars: 230000, careerPathTags: ['software_engineering'] },
+  { name: 'awesome-interview-questions', description: 'שאלות ראיון קלאסיות — הכנה מצוינת לתהליכי גיוס', url: 'https://github.com/DopplerHQ/awesome-interview-questions', language: 'Markdown', stars: 68000, careerPathTags: ['software_engineering'] },
+  { name: 'build-your-own-x', description: 'בנה כלים מפורסמים מאפס — מדגים הבנה עמוקה', url: 'https://github.com/codecrafters-io/build-your-own-x', language: 'Markdown', stars: 320000, careerPathTags: ['software_engineering'] },
+  // Data Science / ML
+  { name: 'scikit-learn', description: 'ספריית ML קנונית — תרומות מוכיחות מיומנות', url: 'https://github.com/scikit-learn/scikit-learn', language: 'Python', stars: 60000, careerPathTags: ['data_science'] },
+  { name: 'pytorch', description: 'framework מוביל לדיפ לרנינג — ביקוש גבוה בשוק', url: 'https://github.com/pytorch/pytorch', language: 'Python', stars: 84000, careerPathTags: ['data_science'] },
+  { name: 'awesome-machine-learning', description: 'קולקציית כלים ומשאבים ב-ML — מייצגת ידע רחב', url: 'https://github.com/josephmisiti/awesome-machine-learning', language: 'Python', stars: 67000, careerPathTags: ['data_science'] },
+  { name: 'pandas', description: 'ספריית עיבוד נתונים מובילה — בסיסית לכל מדען נתונים', url: 'https://github.com/pandas-dev/pandas', language: 'Python', stars: 44000, careerPathTags: ['data_science'] },
+  { name: 'streamlit', description: 'יצירת אפליקציות נתונים מהירה — מדגים יכולת end-to-end', url: 'https://github.com/streamlit/streamlit', language: 'Python', stars: 37000, careerPathTags: ['data_science'] },
+  { name: 'mlflow', description: 'ניהול מחזור חיי ML — רלוונטי לתפקידים ב-MLOps', url: 'https://github.com/mlflow/mlflow', language: 'Python', stars: 19000, careerPathTags: ['data_science'] },
+  // DevOps
+  { name: 'kubernetes', description: 'תזמון containers מוביל — חובה לכל DevOps Engineer', url: 'https://github.com/kubernetes/kubernetes', language: 'Go', stars: 112000, careerPathTags: ['devops'] },
+  { name: 'terraform', description: 'Infrastructure as Code — סטנדרט תעשייתי', url: 'https://github.com/hashicorp/terraform', language: 'Go', stars: 43000, careerPathTags: ['devops'] },
+  { name: 'ansible', description: 'אוטומציית IT — נפוץ מאוד בחברות ישראליות', url: 'https://github.com/ansible/ansible', language: 'Python', stars: 63000, careerPathTags: ['devops'] },
+  { name: 'prometheus', description: 'מוניטורינג ואלרטינג — מרכזי בסטאק DevOps מודרני', url: 'https://github.com/prometheus/prometheus', language: 'Go', stars: 56000, careerPathTags: ['devops'] },
+  { name: 'docker-compose', description: 'הגדרת סביבות multi-container — כלי יומיומי', url: 'https://github.com/docker/compose', language: 'Go', stars: 34000, careerPathTags: ['devops'] },
+  { name: 'awesome-devops', description: 'קולקציית כלי DevOps — מדגים היכרות רחבה עם התחום', url: 'https://github.com/wmariuss/awesome-devops', language: 'Markdown', stars: 8000, careerPathTags: ['devops'] },
+  // Cyber
+  { name: 'metasploit-framework', description: 'פריימוורק לבדיקות חדירה — רלוונטי לאנשי סייבר', url: 'https://github.com/rapid7/metasploit-framework', language: 'Ruby', stars: 34000, careerPathTags: ['cyber'] },
+  { name: 'awesome-hacking', description: 'משאבי אבטחת מידע — מדגים עומק בתחום', url: 'https://github.com/Hack-with-Github/Awesome-Hacking', language: 'Markdown', stars: 84000, careerPathTags: ['cyber'] },
+  { name: 'PayloadsAllTheThings', description: 'Payloads לבדיקות אבטחה — חומר מחקרי מקצועי', url: 'https://github.com/swisskyrepo/PayloadsAllTheThings', language: 'Markdown', stars: 62000, careerPathTags: ['cyber'] },
+  { name: 'theHarvester', description: 'כלי OSINT לאיסוף מידע — נפוץ בתחום', url: 'https://github.com/laramies/theHarvester', language: 'Python', stars: 11000, careerPathTags: ['cyber'] },
+  { name: 'WebGoat', description: 'אפליקציה לתרגול אבטחת אפליקציות ווב', url: 'https://github.com/WebGoat/WebGoat', language: 'Java', stars: 6900, careerPathTags: ['cyber'] },
+  { name: 'nuclei', description: 'סריקת פגיעויות מהירה — כלי מוביל בתחום', url: 'https://github.com/projectdiscovery/nuclei', language: 'Go', stars: 21000, careerPathTags: ['cyber'] },
+  // Product Management
+  { name: 'awesome-product-management', description: 'משאבי ניהול מוצר — מדגים ידע מקצועי רחב', url: 'https://github.com/dend/awesome-product-management', language: 'Markdown', stars: 1700, careerPathTags: ['product_management'] },
+  { name: 'public-apis', description: 'APIs ציבוריים לבניית פרויקטי POC מהירים', url: 'https://github.com/public-apis/public-apis', language: 'Python', stars: 320000, careerPathTags: ['product_management'] },
+  // Design
+  { name: 'material-ui', description: 'ספריית UI מבוססת Material Design — ביקוש גבוה', url: 'https://github.com/mui/material-ui', language: 'TypeScript', stars: 94000, careerPathTags: ['design'] },
+  { name: 'tailwindcss', description: 'Utility-first CSS framework — פופולרי מאוד', url: 'https://github.com/tailwindlabs/tailwindcss', language: 'CSS', stars: 84000, careerPathTags: ['design', 'software_engineering'] },
+  // Engineering Manager
+  { name: 'engineering-blogs', description: 'בלוגי הנדסה של חברות מובילות — לימוד וידע ניהולי', url: 'https://github.com/kilimchoi/engineering-blogs', language: 'Markdown', stars: 32000, careerPathTags: ['engineering_manager'] },
+  { name: 'awesome-leading-and-managing', description: 'תוכן על מסלול ניהול הנדסה — מדגים בשלות מנהיגותית', url: 'https://github.com/LappleApple/awesome-leading-and-managing', language: 'Markdown', stars: 12000, careerPathTags: ['engineering_manager'] },
+]
+
+function pickPinnedRepos(careerPath: string): PinnedRepo[] {
+  const relevant = PINNED_REPOS.filter(r => r.careerPathTags.includes(careerPath))
+  if (relevant.length >= 6) return relevant.slice(0, 6)
+  const fallback = PINNED_REPOS.filter(r => r.careerPathTags.includes('software_engineering') && !relevant.includes(r))
+  return [...relevant, ...fallback].slice(0, 6)
+}
+
 function getAnswerValue(answers: Answer[], questionId: string): string | number | undefined {
   const found = answers.find(a => a.questionId === questionId)
   if (!found) return undefined
@@ -153,7 +200,7 @@ export async function runEvaluation(answers: Answer[]): Promise<EvaluationResult
     marketSnapshot,
     tips,
     networkingContacts: contacts as INetworkingContact[],
-    pinnedRepos: [],
+    pinnedRepos: pickPinnedRepos(targetRole),
     score,
   }
 }

@@ -45,6 +45,7 @@ export interface EvaluationResult {
   marketSnapshot: MarketSnapshot;
   tips: string[];
   networkingContacts: INetworkingContact[];
+  pinnedRepos: PinnedRepo[];
   score: number;
 }
 
@@ -55,6 +56,15 @@ export interface MarketSnapshot {
   avgSalaryMax: number;
   currency: string;
   demandLevel: 'low' | 'medium' | 'high';
+}
+
+export interface PinnedRepo {
+  name: string;
+  description: string;
+  url: string;
+  language: string;
+  stars: number;
+  careerPathTags: string[];
 }
 
 export interface EvaluateRequest {

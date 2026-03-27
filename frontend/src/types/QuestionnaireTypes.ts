@@ -80,6 +80,15 @@ export interface NetworkingContact {
   relevanceScore: number;
 }
 
+export interface PinnedRepo {
+  name: string;
+  description: string;
+  url: string;
+  language: string;
+  stars: number;
+  careerPathTags: string[];
+}
+
 export interface EvaluationResult {
   timelineWeeksMin: number;
   timelineWeeksMax: number;
@@ -87,5 +96,6 @@ export interface EvaluationResult {
   marketSnapshot: MarketSnapshot;
   tips: string[];
   networkingContacts: NetworkingContact[];
+  pinnedRepos: PinnedRepo[];
   score: number;
 }
