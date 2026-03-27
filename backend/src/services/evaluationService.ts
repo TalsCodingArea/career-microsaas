@@ -15,26 +15,28 @@ import type { Answer, EvaluationResult, INetworkingContact, MarketSnapshot } fro
 import { JobMarketData } from '../models/JobMarketData.js'
 import { NetworkingContact } from '../models/NetworkingContact.js'
 
-// Mock market data used when DB has no records for a career path
+// Mock market data — Israeli market rates in ILS/month
 const MOCK_MARKET: Record<string, Partial<MarketSnapshot>> = {
-  software_engineering: { openPositions: 48000, avgSalaryMin: 95000, avgSalaryMax: 155000, demandLevel: 'high' },
-  data_science: { openPositions: 22000, avgSalaryMin: 100000, avgSalaryMax: 160000, demandLevel: 'high' },
-  product_management: { openPositions: 15000, avgSalaryMin: 110000, avgSalaryMax: 170000, demandLevel: 'medium' },
-  design: { openPositions: 12000, avgSalaryMin: 80000, avgSalaryMax: 130000, demandLevel: 'medium' },
-  marketing: { openPositions: 18000, avgSalaryMin: 70000, avgSalaryMax: 120000, demandLevel: 'medium' },
-  sales: { openPositions: 30000, avgSalaryMin: 65000, avgSalaryMax: 130000, demandLevel: 'high' },
-  finance: { openPositions: 14000, avgSalaryMin: 75000, avgSalaryMax: 130000, demandLevel: 'medium' },
-  operations: { openPositions: 10000, avgSalaryMin: 60000, avgSalaryMax: 100000, demandLevel: 'low' },
-  engineering_manager: { openPositions: 8000, avgSalaryMin: 140000, avgSalaryMax: 210000, demandLevel: 'medium' },
-  default: { openPositions: 10000, avgSalaryMin: 70000, avgSalaryMax: 120000, demandLevel: 'medium' },
+  software_engineering: { openPositions: 12000, avgSalaryMin: 20000, avgSalaryMax: 40000, demandLevel: 'high' },
+  data_science: { openPositions: 4500, avgSalaryMin: 22000, avgSalaryMax: 42000, demandLevel: 'high' },
+  product_management: { openPositions: 3000, avgSalaryMin: 24000, avgSalaryMax: 45000, demandLevel: 'medium' },
+  design: { openPositions: 2500, avgSalaryMin: 15000, avgSalaryMax: 28000, demandLevel: 'medium' },
+  cyber: { openPositions: 5000, avgSalaryMin: 22000, avgSalaryMax: 45000, demandLevel: 'high' },
+  devops: { openPositions: 4000, avgSalaryMin: 20000, avgSalaryMax: 40000, demandLevel: 'high' },
+  fintech: { openPositions: 2000, avgSalaryMin: 18000, avgSalaryMax: 35000, demandLevel: 'medium' },
+  biotech: { openPositions: 1500, avgSalaryMin: 16000, avgSalaryMax: 30000, demandLevel: 'medium' },
+  marketing: { openPositions: 3500, avgSalaryMin: 12000, avgSalaryMax: 25000, demandLevel: 'medium' },
+  engineering_manager: { openPositions: 1800, avgSalaryMin: 35000, avgSalaryMax: 60000, demandLevel: 'medium' },
+  default: { openPositions: 2000, avgSalaryMin: 15000, avgSalaryMax: 28000, demandLevel: 'medium' },
 }
 
 const MOCK_CONTACTS: INetworkingContact[] = [
-  { name: 'Alex Rivera', role: 'Senior Software Engineer', company: 'Stripe', linkedinUrl: 'https://linkedin.com', careerPathTags: ['software_engineering'], relevanceScore: 0.95 },
-  { name: 'Jamie Chen', role: 'Engineering Manager', company: 'Airbnb', linkedinUrl: 'https://linkedin.com', careerPathTags: ['software_engineering', 'engineering_manager'], relevanceScore: 0.9 },
-  { name: 'Morgan Lee', role: 'Data Scientist', company: 'Spotify', linkedinUrl: 'https://linkedin.com', careerPathTags: ['data_science'], relevanceScore: 0.92 },
-  { name: 'Taylor Brooks', role: 'Product Manager', company: 'Notion', linkedinUrl: 'https://linkedin.com', careerPathTags: ['product_management'], relevanceScore: 0.88 },
-  { name: 'Sam Patel', role: 'UX Designer', company: 'Figma', linkedinUrl: 'https://linkedin.com', careerPathTags: ['design'], relevanceScore: 0.85 },
+  { name: 'יואב כהן', role: 'מהנדס תוכנה בכיר', company: 'Wix', linkedinUrl: 'https://linkedin.com', careerPathTags: ['software_engineering'], relevanceScore: 0.95 },
+  { name: 'שירה לוי', role: 'מנהלת הנדסה', company: 'Monday.com', linkedinUrl: 'https://linkedin.com', careerPathTags: ['software_engineering', 'engineering_manager'], relevanceScore: 0.9 },
+  { name: 'עמי ברק', role: 'מדען נתונים', company: 'IronSource', linkedinUrl: 'https://linkedin.com', careerPathTags: ['data_science'], relevanceScore: 0.92 },
+  { name: 'נועה אברהם', role: 'מנהלת מוצר', company: 'Fiverr', linkedinUrl: 'https://linkedin.com', careerPathTags: ['product_management'], relevanceScore: 0.88 },
+  { name: 'רן גולן', role: 'מומחה סייבר', company: 'CyberArk', linkedinUrl: 'https://linkedin.com', careerPathTags: ['cyber'], relevanceScore: 0.91 },
+  { name: 'מיכל שפירא', role: 'מעצבת UX', company: 'Elementor', linkedinUrl: 'https://linkedin.com', careerPathTags: ['design'], relevanceScore: 0.85 },
 ]
 
 function getAnswerValue(answers: Answer[], questionId: string): string | number | undefined {
@@ -72,10 +74,10 @@ function demandModifier(level: 'low' | 'medium' | 'high'): number {
 }
 
 function derivateTimeline(score: number): { min: number; max: number; label: string } {
-  if (score >= 75) return { min: 2, max: 6, label: '2–6 weeks' }
-  if (score >= 55) return { min: 4, max: 10, label: '4–10 weeks' }
-  if (score >= 35) return { min: 8, max: 16, label: '8–16 weeks' }
-  return { min: 16, max: 26, label: '16–26 weeks' }
+  if (score >= 75) return { min: 2, max: 6, label: '2–6 שבועות' }
+  if (score >= 55) return { min: 4, max: 10, label: '4–10 שבועות' }
+  if (score >= 35) return { min: 8, max: 16, label: '8–16 שבועות' }
+  return { min: 16, max: 26, label: '16–26 שבועות' }
 }
 
 function buildTips(answers: Answer[], score: number, demandLevel: 'low' | 'medium' | 'high'): string[] {
@@ -84,12 +86,12 @@ function buildTips(answers: Answer[], score: number, demandLevel: 'low' | 'mediu
   const linkedin = Number(getAnswerValue(answers, 'linkedin_rating') ?? 3)
   const employed = getAnswerValue(answers, 'employment_status')
 
-  if (apps < 5) tips.push('Increase your application volume to 5–10 per week to see faster results.')
-  if (linkedin < 4) tips.push('Complete your LinkedIn profile to "All-Star" status — it significantly increases recruiter reach.')
-  if (employed === 'unemployed') tips.push('Consider freelance or contract work to fill employment gaps while you search.')
-  if (demandLevel === 'low') tips.push('Your target field has lower demand right now. Consider adjacent roles to broaden your options.')
-  if (score < 40) tips.push('Focus on one strong targeted application per day rather than mass-applying.')
-  if (linkedin >= 4 && apps >= 5) tips.push('Great fundamentals! Try reaching out directly to hiring managers on LinkedIn for faster traction.')
+  if (apps < 5) tips.push('הגדל את כמות המועמדויות ל-5–10 בשבוע כדי לראות תוצאות מהירות יותר.')
+  if (linkedin < 4) tips.push('השלם את פרופיל הלינקדאין שלך לרמת "All-Star" — זה מגדיל משמעותית את החשיפה לרקרוטרים.')
+  if (employed === 'unemployed') tips.push('שקול עבודת פרילנס או קבלנות כדי למלא פערי תעסוקה בזמן החיפוש.')
+  if (demandLevel === 'low') tips.push('התחום שלך נמצא בביקוש נמוך כעת. שקול תפקידים סמוכים כדי להרחיב את האפשרויות.')
+  if (score < 40) tips.push('התמקד במועמדות ממוקדת ואחת ביום במקום שליחה המונית — איכות על פני כמות.')
+  if (linkedin >= 4 && apps >= 5) tips.push('בסיס מצוין! נסה לפנות ישירות למנהלי גיוס בלינקדאין לקבלת מענה מהיר יותר.')
 
   return tips.slice(0, 4) // cap at 4 tips
 }
@@ -109,7 +111,7 @@ export async function runEvaluation(answers: Answer[]): Promise<EvaluationResult
     openPositions: marketData?.openPositionsCount ?? mockFallback.openPositions ?? 10000,
     avgSalaryMin: marketData?.avgSalaryMin ?? mockFallback.avgSalaryMin ?? 70000,
     avgSalaryMax: marketData?.avgSalaryMax ?? mockFallback.avgSalaryMax ?? 120000,
-    currency: marketData?.currency ?? 'USD',
+    currency: marketData?.currency ?? 'ILS',
     demandLevel: (mockFallback.demandLevel as 'low' | 'medium' | 'high') ?? 'medium',
   }
 

@@ -28,7 +28,7 @@ export function Questionnaire() {
       {/* Top bar */}
       <header className="w-full max-w-lg mx-auto px-4 pt-8 pb-4">
         <div className="mb-6">
-          <span className="text-accent-400 font-bold text-lg tracking-tight">Career Evaluator</span>
+          <span className="text-accent-400 font-bold text-lg tracking-tight">מעריך קריירה</span>
         </div>
         <ProgressBar
           current={currentQuestionIndex + 1}

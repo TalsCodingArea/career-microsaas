@@ -4,7 +4,8 @@
 
 @layer base {
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Heebo', system-ui, -apple-system, sans-serif;
+    direction: rtl;
     -webkit-font-smoothing: antialiased;
   }
 

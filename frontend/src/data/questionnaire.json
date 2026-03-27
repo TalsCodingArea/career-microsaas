@@ -3,40 +3,41 @@
   "questions": [
     {
       "id": "current_role",
-      "text": "What's your current role or field?",
+      "text": "מה התחום המקצועי שלך?",
       "type": "single",
       "options": [
-        { "value": "software_engineering", "label": "Software Engineering" },
-        { "value": "data_science", "label": "Data Science / ML" },
-        { "value": "product_management", "label": "Product Management" },
-        { "value": "design", "label": "UX / Product Design" },
-        { "value": "marketing", "label": "Marketing / Growth" },
-        { "value": "sales", "label": "Sales / Business Dev" },
-        { "value": "finance", "label": "Finance / Accounting" },
-        { "value": "operations", "label": "Operations / HR" },
-        { "value": "other", "label": "Other" }
+        { "value": "software_engineering", "label": "הייטק / פיתוח תוכנה" },
+        { "value": "data_science", "label": "מדעי הנתונים ו-AI" },
+        { "value": "product_management", "label": "ניהול מוצר (PM)" },
+        { "value": "design", "label": "עיצוב UX / מוצר" },
+        { "value": "cyber", "label": "סייבר ואבטחת מידע" },
+        { "value": "devops", "label": "DevOps / תשתיות ענן" },
+        { "value": "fintech", "label": "פינטק ופיננסים" },
+        { "value": "biotech", "label": "ביו-טק ומדעי החיים" },
+        { "value": "marketing", "label": "שיווק דיגיטלי" },
+        { "value": "other", "label": "אחר" }
       ],
       "next": "years_experience"
     },
     {
       "id": "years_experience",
-      "text": "How many years of professional experience do you have?",
+      "text": "כמה שנות ניסיון יש לך?",
       "type": "slider",
       "min": 0,
       "max": 20,
       "step": 1,
-      "unit": "years",
-      "labels": { "0": "< 1 year", "5": "5 years", "10": "10 years", "20": "20+" },
+      "unit": "שנים",
+      "labels": { "0": "פחות משנה", "5": "5 שנים", "10": "10 שנים", "20": "+20" },
       "next": "employment_status"
     },
     {
       "id": "employment_status",
-      "text": "Are you currently employed?",
+      "text": "מה הסטטוס התעסוקתי שלך כרגע?",
       "type": "single",
       "options": [
-        { "value": "employed", "label": "Yes, and not actively looking" },
-        { "value": "employed_looking", "label": "Yes, but open to opportunities" },
-        { "value": "unemployed", "label": "No, actively job searching" }
+        { "value": "employed", "label": "מועסק ולא מחפש באופן פעיל" },
+        { "value": "employed_looking", "label": "מועסק ומחפש" },
+        { "value": "unemployed", "label": "לא מועסק" }
       ],
       "next": {
         "type": "conditional",
@@ -48,58 +49,58 @@
     },
     {
       "id": "applications_per_week",
-      "text": "How many job applications are you sending per week?",
+      "text": "כמה קורות חיים אתה שולח בשבוע?",
       "type": "slider",
       "min": 0,
       "max": 30,
       "step": 1,
-      "unit": "applications/week",
-      "labels": { "0": "0", "5": "5", "10": "10", "20": "20", "30": "30+" },
+      "unit": "מועמדויות/שבוע",
+      "labels": { "0": "0", "5": "5", "10": "10", "20": "20", "30": "+30" },
       "next": "location_preference"
     },
     {
       "id": "location_preference",
-      "text": "What's your preferred work location?",
+      "text": "מה העדפת מיקום העבודה שלך?",
       "type": "single",
       "options": [
-        { "value": "remote", "label": "Remote only" },
-        { "value": "hybrid", "label": "Hybrid" },
-        { "value": "onsite", "label": "On-site" },
-        { "value": "flexible", "label": "Flexible / No preference" }
+        { "value": "remote", "label": "מרחוק" },
+        { "value": "hybrid", "label": "היברידי" },
+        { "value": "onsite", "label": "פרונטלי" },
+        { "value": "flexible", "label": "גמיש / אין העדפה" }
       ],
       "next": "target_role"
     },
     {
       "id": "target_role",
-      "text": "What's your target role or position?",
+      "text": "לאיזה תפקיד אתה מכוון?",
       "type": "single",
       "options": [
-        { "value": "software_engineering", "label": "Software Engineer / Developer" },
-        { "value": "data_science", "label": "Data Scientist / ML Engineer" },
-        { "value": "product_management", "label": "Product Manager" },
-        { "value": "design", "label": "UX Designer" },
-        { "value": "engineering_manager", "label": "Engineering Manager" },
-        { "value": "marketing", "label": "Marketing Manager / Growth" },
-        { "value": "sales", "label": "Sales / Account Executive" },
-        { "value": "finance", "label": "Finance / Analyst" },
-        { "value": "other", "label": "Other" }
+        { "value": "software_engineering", "label": "מהנדס תוכנה / מפתח" },
+        { "value": "data_science", "label": "מדען נתונים / מהנדס ML" },
+        { "value": "product_management", "label": "מנהל מוצר" },
+        { "value": "design", "label": "מעצב UX" },
+        { "value": "cyber", "label": "מומחה סייבר / אבטחת מידע" },
+        { "value": "devops", "label": "מהנדס DevOps / ענן" },
+        { "value": "engineering_manager", "label": "מנהל הנדסה" },
+        { "value": "fintech", "label": "אנליסט פיננסי / פינטק" },
+        { "value": "other", "label": "אחר" }
       ],
       "next": "linkedin_rating"
     },
     {
       "id": "linkedin_rating",
-      "text": "How would you rate your LinkedIn profile completeness?",
+      "text": "איך תדרג את הפרופיל שלך בלינקדאין?",
       "type": "slider",
       "min": 1,
       "max": 5,
       "step": 1,
       "unit": "",
       "labels": {
-        "1": "Basic",
-        "2": "Incomplete",
-        "3": "OK",
-        "4": "Good",
-        "5": "All-Star"
+        "1": "בסיסי",
+        "2": "חלקי",
+        "3": "סביר",
+        "4": "טוב",
+        "5": "מושלם"
       },
       "next": null
     }

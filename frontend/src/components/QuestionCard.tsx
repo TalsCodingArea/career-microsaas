@@ -98,8 +98,8 @@ export function QuestionCard({ question, allQuestions, questionNumber, totalQues
   return (
     <div className="animate-slide-up w-full max-w-lg mx-auto">
       <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-2xl">
-        <div className="mb-2 text-xs text-gray-500 font-medium tracking-widest uppercase">
-          Question {questionNumber} / {totalQuestions}
+        <div className="mb-2 text-xs text-gray-500 font-medium tracking-widest">
+          שאלה {questionNumber} מתוך {totalQuestions}
         </div>
 
         <h2 className="text-2xl font-semibold text-gray-100 mb-8 leading-snug">
@@ -142,22 +142,22 @@ export function QuestionCard({ question, allQuestions, questionNumber, totalQues
             <button
               onClick={onBack}
               className="btn-secondary flex-shrink-0"
-              aria-label="Go back"
+              aria-label="חזור"
             >
-              ← Back
+              חזור →
             </button>
           )}
           <button
             onClick={handleNext}
             disabled={!hasAnswer || state.isSubmitting}
             className="btn-primary flex-1"
-            aria-label={question.next === null ? 'Submit and get results' : 'Next question'}
+            aria-label={question.next === null ? 'שלח וקבל תוצאות' : 'שאלה הבאה'}
           >
             {state.isSubmitting
-              ? 'Evaluating…'
+              ? '…מעריך'
               : question.next === null
-              ? 'Get My Results →'
-              : 'Next →'}
+              ? '← קבל את התוצאות שלי'
+              : '← הבא'}
           </button>
         </div>
 

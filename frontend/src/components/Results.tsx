@@ -12,9 +12,9 @@ const demandColors = {
 }
 
 const demandLabels = {
-  low: 'Low Demand',
-  medium: 'Medium Demand',
-  high: 'High Demand',
+  low: 'ביקוש נמוך',
+  medium: 'ביקוש בינוני',
+  high: 'ביקוש גבוה',
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -44,7 +44,7 @@ function ScoreRing({ score }: { score: number }) {
           <span className="text-xs text-gray-400">/ 100</span>
         </div>
       </div>
-      <p className="text-sm text-gray-400 font-medium">Market Readiness Score</p>
+      <p className="text-sm text-gray-400 font-medium">ציון מוכנות לשוק</p>
     </div>
   )
 }
@@ -53,22 +53,22 @@ export function Results({ result }: Props) {
   const { reset } = useQuestionnaire()
   const { marketSnapshot, tips, networkingContacts } = result
 
-  const salaryDisplay = `$${marketSnapshot.avgSalaryMin.toLocaleString()} – $${marketSnapshot.avgSalaryMax.toLocaleString()} / yr`
+  const salaryDisplay = `₪${marketSnapshot.avgSalaryMin.toLocaleString('he-IL')} – ₪${marketSnapshot.avgSalaryMax.toLocaleString('he-IL')} / חודש`
 
   return (
     <div className="animate-fade-in w-full max-w-2xl mx-auto space-y-6">
       <div className="text-center mb-2">
-        <h1 className="text-3xl font-bold text-gray-100 mb-1">Your Career Evaluation</h1>
-        <p className="text-gray-400">Based on your profile and current market data</p>
+        <h1 className="text-3xl font-bold text-gray-100 mb-1">הערכת הקריירה שלך</h1>
+        <p className="text-gray-400">בהתבסס על הפרופיל שלך ונתוני השוק הנוכחיים</p>
       </div>
 
       {/* Timeline + Score */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 text-center">
-          <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Estimated Timeline</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">לוח זמנים משוער</p>
           <p className="text-4xl font-bold text-accent-400 mb-1">{result.timelineLabel}</p>
           <p className="text-sm text-gray-400">
-            {result.timelineWeeksMin}–{result.timelineWeeksMax} weeks to an offer
+            {result.timelineWeeksMin}–{result.timelineWeeksMax} שבועות עד להצעת עבודה
           </p>
         </div>
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center">
@@ -78,20 +78,20 @@ export function Results({ result }: Props) {
 
       {/* Market Snapshot */}
       <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-gray-100 mb-4">Market Snapshot</h2>
+        <h2 className="text-lg font-semibold text-gray-100 mb-4">תמונת שוק</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Open Positions</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">משרות פתוחות</p>
             <p className="text-2xl font-bold text-gray-100">
-              {marketSnapshot.openPositions.toLocaleString()}+
+              {marketSnapshot.openPositions.toLocaleString('he-IL')}+
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Avg Salary</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">שכר ממוצע</p>
             <p className="text-xl font-bold text-gray-100">{salaryDisplay}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Demand</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">ביקוש</p>
             <p className={`text-xl font-bold ${demandColors[marketSnapshot.demandLevel]}`}>
               {demandLabels[marketSnapshot.demandLevel]}
             </p>
@@ -102,7 +102,7 @@ export function Results({ result }: Props) {
       {/* Tips */}
       {tips.length > 0 && (
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-100 mb-4">Personalized Tips</h2>
+          <h2 className="text-lg font-semibold text-gray-100 mb-4">טיפים מותאמים אישית</h2>
           <ul className="space-y-3">
             {tips.map((tip, i) => (
               <li key={i} className="flex gap-3">
@@ -117,7 +117,7 @@ export function Results({ result }: Props) {
       {/* Networking Contacts */}
       {networkingContacts.length > 0 && (
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-100 mb-4">Suggested Connections</h2>
+          <h2 className="text-lg font-semibold text-gray-100 mb-4">קשרים מומלצים</h2>
           <div className="space-y-3">
             {networkingContacts.map((contact, i) => (
               <a
@@ -141,7 +141,7 @@ export function Results({ result }: Props) {
                   </p>
                 </div>
                 <span className="text-gray-500 group-hover:text-accent-400 transition-colors text-xs">
-                  LinkedIn →
+                  לינקדאין →
                 </span>
               </a>
             ))}
@@ -151,7 +151,7 @@ export function Results({ result }: Props) {
 
       <div className="text-center pt-2">
         <button onClick={reset} className="btn-secondary text-sm">
-          Start Over
+          התחל מחדש
         </button>
       </div>
     </div>
