@@ -1,0 +1,113 @@
+version: "3.9"
+
+# Scraper microservices: listener + parser
+#
+# listener — polls Telegram for URLs (job listings, articles) and pushes them
+#            onto a Redis queue for asynchronous processing.
+#
+# parser   — consumes the Redis queue, scrapes each URL (requests → BeautifulSoup
+#            with Playwright fallback for JS-rendered pages), and stores the
+#            parsed result back in Redis for the main bot to retrieve.
+#
+# Usage:
+#   cp ../.env .env          # or share the parent .env via env_file below
+#   docker compose up -d
+#
+# Required environment variables (in .env):
+#   TELEGRAM_BOT_TOKEN
+#   TELEGRAM_CHAT_ID_JOBS
+#   OPENAI_API_KEY           # used by parser for LLM-assisted data extraction
+#   SCRAPER_REDIS_HOST       # defaults to "redis" (service name)
+#   SCRAPER_REDIS_PORT       # defaults to 6379
+#   SCRAPER_QUEUE_NAME       # defaults to "scraper:urls"
+#   SCRAPER_RESULT_TTL       # seconds to keep parsed results in Redis (default 3600)
+#   LOG_LEVEL                # optional, defaults to INFO
+
+x-scraper-base: &scraper-base
+  image: python:3.13-slim
+  working_dir: /app
+  env_file: ../.env
+  volumes:
+    - ../:/app
+  environment:
+    PYTHONUNBUFFERED: "1"
+    SCRAPER_REDIS_HOST: redis
+    SCRAPER_REDIS_PORT: "6379"
+    SCRAPER_QUEUE_NAME: "scraper:urls"
+    SCRAPER_RESULT_TTL: "3600"
+  depends_on:
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+
+  # -------------------------------------------------------------------------
+  # Redis — message queue between listener and parser
+  # -------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis_data:/data
+
+  # -------------------------------------------------------------------------
+  # listener — watches the Telegram jobs channel and enqueues URLs to Redis
+  # -------------------------------------------------------------------------
+  listener:
+    <<: *scraper-base
+    command:
+      - bash
+      - -lc
+      - |
+        pip install --no-cache-dir -q \
+          python-telegram-bot==22.5 \
+          redis==5.0.8 \
+          python-dotenv==1.1.1
+        python -u scraper/listener.py
+    environment:
+      PYTHONUNBUFFERED: "1"
+      SCRAPER_REDIS_HOST: redis
+      SCRAPER_REDIS_PORT: "6379"
+      SCRAPER_QUEUE_NAME: "scraper:urls"
+      SCRAPER_SERVICE_ROLE: listener
+
+  # -------------------------------------------------------------------------
+  # parser — dequeues URLs, scrapes them, and stores parsed results in Redis
+  # -------------------------------------------------------------------------
+  parser:
+    <<: *scraper-base
+    command:
+      - bash
+      - -lc
+      - |
+        pip install --no-cache-dir -q \
+          redis==5.0.8 \
+          requests \
+          beautifulsoup4>=4.12.0 \
+          lxml>=5.0.0 \
+          playwright>=1.44.0 \
+          langchain-openai \
+          langchain>=0.3.0 \
+          python-dotenv==1.1.1
+        playwright install --with-deps chromium
+        python -u scraper/parser.py
+    environment:
+      PYTHONUNBUFFERED: "1"
+      SCRAPER_REDIS_HOST: redis
+      SCRAPER_REDIS_PORT: "6379"
+      SCRAPER_QUEUE_NAME: "scraper:urls"
+      SCRAPER_RESULT_PREFIX: "scraper:result:"
+      SCRAPER_RESULT_TTL: "3600"
+      SCRAPER_WORKER_CONCURRENCY: "2"
+      SCRAPER_SERVICE_ROLE: parser
+    # Playwright needs a shm size bump to run Chromium reliably
+    shm_size: 256m
+
+volumes:
+  redis_data:
