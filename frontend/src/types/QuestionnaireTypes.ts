@@ -89,6 +89,12 @@ export interface PinnedRepo {
   careerPathTags: string[];
 }
 
+export interface SkillItem {
+  name: string;
+  demandLevel: 'low' | 'medium' | 'high';
+  category: 'technical' | 'soft' | 'tool';
+}
+
 export interface EvaluationResult {
   timelineWeeksMin: number;
   timelineWeeksMax: number;
@@ -97,5 +103,6 @@ export interface EvaluationResult {
   tips: string[];
   networkingContacts: NetworkingContact[];
   pinnedRepos: PinnedRepo[];
+  skills: SkillItem[];
   score: number;
 }

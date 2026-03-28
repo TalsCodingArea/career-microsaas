@@ -38,6 +38,12 @@ export interface INetworkingContact {
   relevanceScore: number;
 }
 
+export interface SkillItem {
+  name: string;
+  demandLevel: 'low' | 'medium' | 'high';
+  category: 'technical' | 'soft' | 'tool';
+}
+
 export interface EvaluationResult {
   timelineWeeksMin: number;
   timelineWeeksMax: number;
@@ -46,6 +52,7 @@ export interface EvaluationResult {
   tips: string[];
   networkingContacts: INetworkingContact[];
   pinnedRepos: PinnedRepo[];
+  skills: SkillItem[];
   score: number;
 }
 
@@ -70,4 +77,9 @@ export interface PinnedRepo {
 export interface EvaluateRequest {
   sessionId: string;
   answers: Answer[];
+}
+
+export interface SkillsData {
+  careerPath: string;
+  skills: SkillItem[];
 }

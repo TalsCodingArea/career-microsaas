@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 import { JobMarketData } from '../models/JobMarketData.js'
+import type { SkillItem } from '../types/index.js'
 
 const MOCK_MARKET: Record<string, object> = {
   software_engineering: { careerPath: 'software_engineering', role: 'Software Engineer', location: 'global', openPositionsCount: 48000, avgSalaryMin: 95000, avgSalaryMax: 155000, currency: 'USD', dataSource: 'mock', fetchedAt: new Date() },

@@ -1,4 +1,4 @@
-import type { EvaluationResult, PinnedRepo } from '../types/QuestionnaireTypes.ts'
+import type { EvaluationResult, PinnedRepo, SkillItem } from '../types/QuestionnaireTypes.ts'
 import { useQuestionnaire } from '../context/QuestionnaireContext.tsx'
 
 interface Props {
@@ -83,9 +83,27 @@ function RepoCard({ repo }: { repo: PinnedRepo }) {
   )
 }
 
+const demandBadgeColors: Record<SkillItem['demandLevel'], string> = {
+  high: 'bg-accent-500/20 text-accent-400 border border-accent-500/30',
+  medium: 'bg-blue-500/20 text-blue-400 border border-blue-500/30',
+  low: 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
+}
+
+const demandBadgeLabels: Record<SkillItem['demandLevel'], string> = {
+  high: 'ביקוש גבוה',
+  medium: 'ביקוש בינוני',
+  low: 'ביקוש נמוך',
+}
+
+const categoryLabels: Record<SkillItem['category'], string> = {
+  technical: 'טכני',
+  tool: 'כלים',
+  soft: 'רך',
+}
+
 export function Results({ result }: Props) {
   const { reset } = useQuestionnaire()
-  const { marketSnapshot, tips, networkingContacts, pinnedRepos } = result
+  const { marketSnapshot, tips, networkingContacts, pinnedRepos, skills } = result
 
   const salaryDisplay = `₪${marketSnapshot.avgSalaryMin.toLocaleString('he-IL')} – ₪${marketSnapshot.avgSalaryMax.toLocaleString('he-IL')} / חודש`
 
@@ -145,6 +163,28 @@ export function Results({ result }: Props) {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {/* Skills */}
+      {skills && skills.length > 0 && (
+        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-gray-100 mb-1">מיומנויות מבוקשות בתחום שלך</h2>
+          <p className="text-xs text-gray-500 mb-4">הכישורים הבאים הם הרלוונטיים ביותר לתפקיד המבוקש לפי נתוני שוק עדכניים</p>
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-800 border border-gray-700"
+              >
+                <span className="text-sm font-medium text-gray-100">{skill.name}</span>
+                <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${demandBadgeColors[skill.demandLevel]}`}>
+                  {demandBadgeLabels[skill.demandLevel]}
+                </span>
+                <span className="text-xs text-gray-500">{categoryLabels[skill.category]}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
