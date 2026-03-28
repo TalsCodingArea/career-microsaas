@@ -3,6 +3,7 @@ import cors from 'cors'
 import healthRouter from './routes/health.js'
 import evaluateRouter from './routes/evaluate.js'
 import jobMarketRouter from './routes/jobMarket.js'
+import leadsRouter from './routes/leads.js'
 import { errorHandler, notFound } from './middleware/errorHandler.js'
 
 const app = express()
@@ -30,6 +31,7 @@ app.use(express.json({ limit: '1mb' }))
 app.use('/', healthRouter)
 app.use('/api', evaluateRouter)
 app.use('/api', jobMarketRouter)
+app.use('/api', leadsRouter)
 
 // 404 and error handlers (must be last)
 app.use(notFound)
