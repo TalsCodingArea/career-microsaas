@@ -148,6 +148,69 @@ function buildTips(answers: Answer[], score: number, demandLevel: 'low' | 'mediu
   return tips.slice(0, 4)
 }
 
+const SKILLS_BY_CAREER: Record<string, SkillItem[]> = {
+  software_engineering: [
+    { name: 'TypeScript', demandLevel: 'high', category: 'technical' },
+    { name: 'React / Node.js', demandLevel: 'high', category: 'technical' },
+    { name: 'System Design', demandLevel: 'high', category: 'technical' },
+    { name: 'Git', demandLevel: 'high', category: 'tool' },
+    { name: 'Problem Solving', demandLevel: 'high', category: 'soft' },
+  ],
+  data_science: [
+    { name: 'Python', demandLevel: 'high', category: 'technical' },
+    { name: 'Machine Learning', demandLevel: 'high', category: 'technical' },
+    { name: 'SQL', demandLevel: 'high', category: 'technical' },
+    { name: 'Statistics', demandLevel: 'high', category: 'technical' },
+    { name: 'Data Visualization', demandLevel: 'medium', category: 'tool' },
+  ],
+  product_management: [
+    { name: 'Product Strategy', demandLevel: 'high', category: 'soft' },
+    { name: 'User Research', demandLevel: 'high', category: 'soft' },
+    { name: 'Agile / Scrum', demandLevel: 'medium', category: 'soft' },
+    { name: 'Analytics Tools', demandLevel: 'medium', category: 'tool' },
+  ],
+  design: [
+    { name: 'Figma', demandLevel: 'high', category: 'tool' },
+    { name: 'UX Research', demandLevel: 'high', category: 'soft' },
+    { name: 'Prototyping', demandLevel: 'medium', category: 'technical' },
+    { name: 'Accessibility', demandLevel: 'medium', category: 'technical' },
+  ],
+  cyber: [
+    { name: 'Penetration Testing', demandLevel: 'high', category: 'technical' },
+    { name: 'Network Security', demandLevel: 'high', category: 'technical' },
+    { name: 'Security Auditing', demandLevel: 'high', category: 'technical' },
+    { name: 'SIEM Tools', demandLevel: 'medium', category: 'tool' },
+  ],
+  devops: [
+    { name: 'Kubernetes', demandLevel: 'high', category: 'tool' },
+    { name: 'CI/CD Pipelines', demandLevel: 'high', category: 'technical' },
+    { name: 'Terraform', demandLevel: 'high', category: 'tool' },
+    { name: 'Cloud Platforms', demandLevel: 'high', category: 'technical' },
+    { name: 'Monitoring', demandLevel: 'medium', category: 'tool' },
+  ],
+  fintech: [
+    { name: 'Financial Regulations', demandLevel: 'high', category: 'technical' },
+    { name: 'Risk Management', demandLevel: 'medium', category: 'soft' },
+    { name: 'SQL', demandLevel: 'high', category: 'technical' },
+    { name: 'API Integration', demandLevel: 'medium', category: 'technical' },
+  ],
+  engineering_manager: [
+    { name: 'Team Leadership', demandLevel: 'high', category: 'soft' },
+    { name: 'Technical Roadmapping', demandLevel: 'high', category: 'soft' },
+    { name: 'System Design', demandLevel: 'high', category: 'technical' },
+    { name: 'Agile / Scrum', demandLevel: 'medium', category: 'soft' },
+  ],
+  default: [
+    { name: 'Communication', demandLevel: 'high', category: 'soft' },
+    { name: 'Problem Solving', demandLevel: 'high', category: 'soft' },
+    { name: 'Adaptability', demandLevel: 'medium', category: 'soft' },
+  ],
+}
+
+function pickSkills(careerPath: string): SkillItem[] {
+  return SKILLS_BY_CAREER[careerPath] ?? SKILLS_BY_CAREER['default']!
+}
+
 function pickPinnedRepos(careerPath: string): PinnedRepo[] {
   const relevant = PINNED_REPOS.filter(r => r.careerPathTags.includes(careerPath))
   if (relevant.length >= 6) return relevant.slice(0, 6)
@@ -200,7 +263,7 @@ export function runEvaluation(answers: Answer[]): EvaluationResult {
     tips,
     networkingContacts: pickContacts(targetRole),
     pinnedRepos: pickPinnedRepos(targetRole),
-    skills: [],
+    skills: pickSkills(targetRole),
     score,
   }
 }
