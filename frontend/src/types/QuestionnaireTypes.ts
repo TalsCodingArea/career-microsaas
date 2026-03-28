@@ -95,6 +95,11 @@ export interface SkillItem {
   category: 'technical' | 'soft' | 'tool';
 }
 
+export interface SkillsData {
+  careerPath: string;
+  skills: SkillItem[];
+}
+
 export interface EvaluationResult {
   timelineWeeksMin: number;
   timelineWeeksMax: number;

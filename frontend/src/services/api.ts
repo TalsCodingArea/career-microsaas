@@ -1,4 +1,4 @@
-import type { Answer, EvaluationResult } from '../types/QuestionnaireTypes.ts'
+import type { Answer, EvaluationResult, SkillsData } from '../types/QuestionnaireTypes.ts'
 
 const API_BASE = import.meta.env.VITE_API_URL ?? ''
 
@@ -23,5 +23,11 @@ export async function submitEvaluation(
 export async function getJobMarket(careerPath: string) {
   const res = await fetch(`${API_BASE}/api/job-market/${encodeURIComponent(careerPath)}`)
   if (!res.ok) throw new Error('Failed to fetch job market data')
+  return res.json()
+}
+
+export async function getSkills(careerPath: string): Promise<SkillsData> {
+  const res = await fetch(`${API_BASE}/api/skills/${encodeURIComponent(careerPath)}`)
+  if (!res.ok) throw new Error('Failed to fetch skills data')
   return res.json()
 }

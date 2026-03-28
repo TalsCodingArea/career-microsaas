@@ -5,7 +5,7 @@ import type {
   EvaluationResult,
   QuestionnaireState,
 } from '../types/QuestionnaireTypes.ts'
-import { submitEvaluation } from '../services/api.ts'
+import { runEvaluationClientSide } from '../services/evaluationEngine.ts'
 
 type Action =
   | { type: 'ANSWER'; payload: Answer }
@@ -94,12 +94,12 @@ export function QuestionnaireProvider({ children }: { children: React.ReactNode 
   const submit = useCallback(async () => {
     dispatch({ type: 'SUBMIT_START' })
     try {
-      const result = await submitEvaluation(state.sessionId, state.answers)
+      const result = runEvaluationClientSide(state.answers)
       dispatch({ type: 'SUBMIT_SUCCESS', payload: result })
     } catch (err) {
       dispatch({ type: 'SUBMIT_ERROR', payload: (err as Error).message })
     }
-  }, [state.sessionId, state.answers])
+  }, [state.answers])
 
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' })
