@@ -91,6 +91,103 @@ const PINNED_REPOS: PinnedRepo[] = [
   { name: 'awesome-leading-and-managing', description: 'תוכן על מסלול ניהול הנדסה — מדגים בשלות מנהיגותית', url: 'https://github.com/LappleApple/awesome-leading-and-managing', language: 'Markdown', stars: 12000, careerPathTags: ['engineering_manager'] },
 ]
 
+const SKILLS_BY_CAREER: Record<string, SkillItem[]> = {
+  software_engineering: [
+    { name: 'TypeScript', demandLevel: 'high', category: 'technical' },
+    { name: 'React', demandLevel: 'high', category: 'technical' },
+    { name: 'Node.js', demandLevel: 'high', category: 'technical' },
+    { name: 'System Design', demandLevel: 'high', category: 'technical' },
+    { name: 'Git', demandLevel: 'high', category: 'tool' },
+    { name: 'Docker', demandLevel: 'medium', category: 'tool' },
+    { name: 'SQL', demandLevel: 'medium', category: 'technical' },
+    { name: 'Code Review', demandLevel: 'medium', category: 'soft' },
+  ],
+  data_science: [
+    { name: 'Python', demandLevel: 'high', category: 'technical' },
+    { name: 'Machine Learning', demandLevel: 'high', category: 'technical' },
+    { name: 'SQL', demandLevel: 'high', category: 'technical' },
+    { name: 'PyTorch / TensorFlow', demandLevel: 'high', category: 'tool' },
+    { name: 'Statistics', demandLevel: 'medium', category: 'technical' },
+    { name: 'Data Visualization', demandLevel: 'medium', category: 'technical' },
+    { name: 'Communication', demandLevel: 'medium', category: 'soft' },
+  ],
+  product_management: [
+    { name: 'Product Strategy', demandLevel: 'high', category: 'soft' },
+    { name: 'Agile / Scrum', demandLevel: 'high', category: 'soft' },
+    { name: 'Data Analysis', demandLevel: 'high', category: 'technical' },
+    { name: 'Figma', demandLevel: 'medium', category: 'tool' },
+    { name: 'SQL', demandLevel: 'medium', category: 'technical' },
+    { name: 'Stakeholder Management', demandLevel: 'high', category: 'soft' },
+    { name: 'A/B Testing', demandLevel: 'medium', category: 'technical' },
+  ],
+  design: [
+    { name: 'Figma', demandLevel: 'high', category: 'tool' },
+    { name: 'UX Research', demandLevel: 'high', category: 'technical' },
+    { name: 'Prototyping', demandLevel: 'high', category: 'technical' },
+    { name: 'Design Systems', demandLevel: 'medium', category: 'technical' },
+    { name: 'Accessibility', demandLevel: 'medium', category: 'technical' },
+    { name: 'Communication', demandLevel: 'medium', category: 'soft' },
+  ],
+  cyber: [
+    { name: 'Network Security', demandLevel: 'high', category: 'technical' },
+    { name: 'Penetration Testing', demandLevel: 'high', category: 'technical' },
+    { name: 'Linux', demandLevel: 'high', category: 'technical' },
+    { name: 'Python / Bash', demandLevel: 'high', category: 'technical' },
+    { name: 'Burp Suite', demandLevel: 'medium', category: 'tool' },
+    { name: 'SIEM', demandLevel: 'medium', category: 'tool' },
+    { name: 'Incident Response', demandLevel: 'medium', category: 'soft' },
+  ],
+  devops: [
+    { name: 'Kubernetes', demandLevel: 'high', category: 'tool' },
+    { name: 'Terraform', demandLevel: 'high', category: 'tool' },
+    { name: 'CI/CD', demandLevel: 'high', category: 'technical' },
+    { name: 'Linux', demandLevel: 'high', category: 'technical' },
+    { name: 'Docker', demandLevel: 'high', category: 'tool' },
+    { name: 'AWS / GCP / Azure', demandLevel: 'high', category: 'tool' },
+    { name: 'Monitoring & Observability', demandLevel: 'medium', category: 'technical' },
+  ],
+  fintech: [
+    { name: 'Java / Python', demandLevel: 'high', category: 'technical' },
+    { name: 'Financial Regulations', demandLevel: 'high', category: 'technical' },
+    { name: 'Risk Management', demandLevel: 'medium', category: 'soft' },
+    { name: 'SQL', demandLevel: 'high', category: 'technical' },
+    { name: 'API Integration', demandLevel: 'medium', category: 'technical' },
+  ],
+  biotech: [
+    { name: 'Python / R', demandLevel: 'high', category: 'technical' },
+    { name: 'Bioinformatics', demandLevel: 'high', category: 'technical' },
+    { name: 'Statistics', demandLevel: 'high', category: 'technical' },
+    { name: 'Research Writing', demandLevel: 'medium', category: 'soft' },
+    { name: 'Lab Automation', demandLevel: 'medium', category: 'tool' },
+  ],
+  marketing: [
+    { name: 'SEO / SEM', demandLevel: 'high', category: 'technical' },
+    { name: 'Google Analytics', demandLevel: 'high', category: 'tool' },
+    { name: 'Content Strategy', demandLevel: 'medium', category: 'soft' },
+    { name: 'CRM Tools', demandLevel: 'medium', category: 'tool' },
+    { name: 'A/B Testing', demandLevel: 'medium', category: 'technical' },
+    { name: 'Copywriting', demandLevel: 'medium', category: 'soft' },
+  ],
+  engineering_manager: [
+    { name: 'Team Leadership', demandLevel: 'high', category: 'soft' },
+    { name: 'Technical Roadmapping', demandLevel: 'high', category: 'soft' },
+    { name: 'System Design', demandLevel: 'high', category: 'technical' },
+    { name: 'Agile / Scrum', demandLevel: 'medium', category: 'soft' },
+    { name: 'Hiring & Mentoring', demandLevel: 'medium', category: 'soft' },
+    { name: 'Cross-functional Communication', demandLevel: 'high', category: 'soft' },
+  ],
+  default: [
+    { name: 'Communication', demandLevel: 'high', category: 'soft' },
+    { name: 'Problem Solving', demandLevel: 'high', category: 'soft' },
+    { name: 'Adaptability', demandLevel: 'medium', category: 'soft' },
+    { name: 'Collaboration', demandLevel: 'medium', category: 'soft' },
+  ],
+}
+
+function pickSkills(careerPath: string): SkillItem[] {
+  return SKILLS_BY_CAREER[careerPath] ?? SKILLS_BY_CAREER['default']!
+}
+
 function getAnswerValue(answers: Answer[], questionId: string): string | number | undefined {
   const found = answers.find(a => a.questionId === questionId)
   if (!found) return undefined
@@ -146,69 +243,6 @@ function buildTips(answers: Answer[], score: number, demandLevel: 'low' | 'mediu
   if (linkedin >= 4 && apps >= 5) tips.push('בסיס מצוין! נסה לפנות ישירות למנהלי גיוס בלינקדאין לקבלת מענה מהיר יותר.')
 
   return tips.slice(0, 4)
-}
-
-const SKILLS_BY_CAREER: Record<string, SkillItem[]> = {
-  software_engineering: [
-    { name: 'TypeScript', demandLevel: 'high', category: 'technical' },
-    { name: 'React / Node.js', demandLevel: 'high', category: 'technical' },
-    { name: 'System Design', demandLevel: 'high', category: 'technical' },
-    { name: 'Git', demandLevel: 'high', category: 'tool' },
-    { name: 'Problem Solving', demandLevel: 'high', category: 'soft' },
-  ],
-  data_science: [
-    { name: 'Python', demandLevel: 'high', category: 'technical' },
-    { name: 'Machine Learning', demandLevel: 'high', category: 'technical' },
-    { name: 'SQL', demandLevel: 'high', category: 'technical' },
-    { name: 'Statistics', demandLevel: 'high', category: 'technical' },
-    { name: 'Data Visualization', demandLevel: 'medium', category: 'tool' },
-  ],
-  product_management: [
-    { name: 'Product Strategy', demandLevel: 'high', category: 'soft' },
-    { name: 'User Research', demandLevel: 'high', category: 'soft' },
-    { name: 'Agile / Scrum', demandLevel: 'medium', category: 'soft' },
-    { name: 'Analytics Tools', demandLevel: 'medium', category: 'tool' },
-  ],
-  design: [
-    { name: 'Figma', demandLevel: 'high', category: 'tool' },
-    { name: 'UX Research', demandLevel: 'high', category: 'soft' },
-    { name: 'Prototyping', demandLevel: 'medium', category: 'technical' },
-    { name: 'Accessibility', demandLevel: 'medium', category: 'technical' },
-  ],
-  cyber: [
-    { name: 'Penetration Testing', demandLevel: 'high', category: 'technical' },
-    { name: 'Network Security', demandLevel: 'high', category: 'technical' },
-    { name: 'Security Auditing', demandLevel: 'high', category: 'technical' },
-    { name: 'SIEM Tools', demandLevel: 'medium', category: 'tool' },
-  ],
-  devops: [
-    { name: 'Kubernetes', demandLevel: 'high', category: 'tool' },
-    { name: 'CI/CD Pipelines', demandLevel: 'high', category: 'technical' },
-    { name: 'Terraform', demandLevel: 'high', category: 'tool' },
-    { name: 'Cloud Platforms', demandLevel: 'high', category: 'technical' },
-    { name: 'Monitoring', demandLevel: 'medium', category: 'tool' },
-  ],
-  fintech: [
-    { name: 'Financial Regulations', demandLevel: 'high', category: 'technical' },
-    { name: 'Risk Management', demandLevel: 'medium', category: 'soft' },
-    { name: 'SQL', demandLevel: 'high', category: 'technical' },
-    { name: 'API Integration', demandLevel: 'medium', category: 'technical' },
-  ],
-  engineering_manager: [
-    { name: 'Team Leadership', demandLevel: 'high', category: 'soft' },
-    { name: 'Technical Roadmapping', demandLevel: 'high', category: 'soft' },
-    { name: 'System Design', demandLevel: 'high', category: 'technical' },
-    { name: 'Agile / Scrum', demandLevel: 'medium', category: 'soft' },
-  ],
-  default: [
-    { name: 'Communication', demandLevel: 'high', category: 'soft' },
-    { name: 'Problem Solving', demandLevel: 'high', category: 'soft' },
-    { name: 'Adaptability', demandLevel: 'medium', category: 'soft' },
-  ],
-}
-
-function pickSkills(careerPath: string): SkillItem[] {
-  return SKILLS_BY_CAREER[careerPath] ?? SKILLS_BY_CAREER['default']!
 }
 
 function pickPinnedRepos(careerPath: string): PinnedRepo[] {

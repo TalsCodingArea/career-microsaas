@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import type { EvaluationResult, PinnedRepo, SkillItem } from '../types/QuestionnaireTypes.ts'
 import { useQuestionnaire } from '../context/QuestionnaireContext.tsx'
+import { getSkills } from '../services/api.ts'
 
 interface Props {
   result: EvaluationResult
@@ -103,7 +105,20 @@ const categoryLabels: Record<SkillItem['category'], string> = {
 
 export function Results({ result }: Props) {
   const { reset } = useQuestionnaire()
-  const { marketSnapshot, tips, networkingContacts, pinnedRepos, skills } = result
+  const { marketSnapshot, tips, networkingContacts, pinnedRepos } = result
+
+  const [skills, setSkills] = useState<SkillItem[]>(result.skills ?? [])
+  const [skillsLoading, setSkillsLoading] = useState(false)
+  const [skillsError, setSkillsError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setSkillsLoading(true)
+    setSkillsError(null)
+    getSkills(marketSnapshot.careerPath)
+      .then(data => setSkills(data.skills))
+      .catch(() => setSkillsError('לא ניתן לטעון נתוני מיומנויות'))
+      .finally(() => setSkillsLoading(false))
+  }, [marketSnapshot.careerPath])
 
   const salaryDisplay = `₪${marketSnapshot.avgSalaryMin.toLocaleString('he-IL')} – ₪${marketSnapshot.avgSalaryMax.toLocaleString('he-IL')} / חודש`
 
@@ -167,10 +182,16 @@ export function Results({ result }: Props) {
       )}
 
       {/* Skills */}
-      {skills && skills.length > 0 && (
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-100 mb-1">מיומנויות מבוקשות בתחום שלך</h2>
-          <p className="text-xs text-gray-500 mb-4">הכישורים הבאים הם הרלוונטיים ביותר לתפקיד המבוקש לפי נתוני שוק עדכניים</p>
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+        <h2 className="text-lg font-semibold text-gray-100 mb-1">מיומנויות מבוקשות בתחום שלך</h2>
+        <p className="text-xs text-gray-500 mb-4">הכישורים הבאים הם הרלוונטיים ביותר לתפקיד המבוקש לפי נתוני שוק עדכניים</p>
+        {skillsLoading && (
+          <p className="text-sm text-gray-500 animate-pulse">טוען נתוני מיומנויות...</p>
+        )}
+        {skillsError && (
+          <p className="text-sm text-red-400">{skillsError}</p>
+        )}
+        {!skillsLoading && !skillsError && skills.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {skills.map((skill, i) => (
               <div
@@ -185,8 +206,8 @@ export function Results({ result }: Props) {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Networking Contacts */}
       {networkingContacts.length > 0 && (
